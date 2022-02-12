@@ -36,7 +36,7 @@ final class OrdersResponse
     {
         $response = new self();
         $response->count = $data['count'];
-        $response->page = $data['page'];
+        $response->page = (int)$data['page'];
         $response->orders = array_map(static function (array $item): Order {
             return Order::fromArray($item);
         }, $data['data']);
