@@ -7,6 +7,7 @@ namespace Ushakovme\Remonline\Response;
 
 final class ClientsResponse
 {
+    private int $page;
     private int $count;
     /**
      * @var Client[]
@@ -24,6 +25,11 @@ final class ClientsResponse
     public function getClients(): array
     {
         return $this->clients;
+    }
+
+    public function getPage(): int
+    {
+        return $this->page;
     }
 
     public static function fromArray(array $data): self
