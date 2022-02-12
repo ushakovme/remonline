@@ -10,6 +10,7 @@ trait DateTrait
 {
     protected static function getDate(array $data, string $key): ?DateTime
     {
-        return empty($data[$key]) ? null : (new DateTime())->setTimestamp($data[$key]);
+        $timestamp = (int) ($data[$key] / 1000);
+        return empty($data[$key]) ? null : (new DateTime())->setTimestamp($timestamp);
     }
 }
