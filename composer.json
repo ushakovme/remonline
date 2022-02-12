@@ -1,0 +1,23 @@
+{
+    "name": "ushakovme/remonline",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Ushakovme\\Remonline\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ilia Ushakov",
+            "email": "ilia@ushakov.me"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-http": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

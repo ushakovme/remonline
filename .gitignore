@@ -1,0 +1,5 @@
+example.php
+composer.lock
+.phpunit.result.cache
+vendor
+.idea
