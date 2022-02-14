@@ -8,6 +8,11 @@ final class CustomFields
 {
     private array $data;
 
+    public function toArray(): array
+    {
+        return $this->data;
+    }
+
     public static function fromArray(array $data): self
     {
         $item = new self();
@@ -18,5 +23,10 @@ final class CustomFields
     public function get(string $key): ?string
     {
         return $this->data[$key] ?? null;
+    }
+
+    public function set(string $key, string $value): void
+    {
+        $this->data[$key] = $value;
     }
 }

@@ -21,9 +21,9 @@ final class Client
     private string $email;
     private string $notes;
     private string $address;
-    private bool $supplier;
-    private bool $juridical;
-    private bool $conflicted;
+    private bool $supplier = false;
+    private bool $juridical = false;
+    private bool $conflicted = false;
     private ?DateTime $modified_at;
     private ?DateTime $created_at;
     private string $discount_code;
@@ -34,6 +34,67 @@ final class Client
     private int $discount_materials_margin_id;
     private CustomFields $custom_fields;
     private ?AdCampaign $ad_campaign;
+
+    public function toArray(): array
+    {
+        $data = [];
+        if (!empty($this->id)) {
+            $data['id'] = $this->id;
+        }
+        if (!empty($this->name)) {
+            $data['name'] = $this->name;
+        }
+        if (!empty($this->phone)) {
+            $data['phone'] = $this->phone;
+        }
+        if (!empty($this->email)) {
+            $data['email'] = $this->email;
+        }
+        if (!empty($this->email)) {
+            $data['email'] = $this->email;
+        }
+        if (!empty($this->email)) {
+            $data['email'] = $this->email;
+        }
+        if (!empty($this->email)) {
+            $data['email'] = $this->email;
+        }
+        if (!empty($this->notes)) {
+            $data['notes'] = $this->notes;
+        }
+        if (!empty($this->address)) {
+            $data['address'] = $this->address;
+        }
+        if (!empty($this->supplier)) {
+            $data['supplier'] = $this->supplier;
+        }
+        if (!empty($this->juridical)) {
+            $data['juridical'] = $this->juridical;
+        }
+        if (!empty($this->conflicted)) {
+            $data['conflicted'] = $this->conflicted;
+        }
+        if (!empty($this->discount_code)) {
+            $data['discount_code'] = $this->discount_code;
+        }
+        if (!empty($this->discount_services)) {
+            $data['discount_services'] = $this->discount_services;
+        }
+        if (!empty($this->discount_materials)) {
+            $data['discount_materials'] = $this->discount_materials;
+        }
+        if (!empty($this->discount_goods_margin_id)) {
+            $data['discount_goods_margin_id'] = $this->discount_goods_margin_id;
+        }
+        if (!empty($this->discount_materials_margin_id)) {
+            $data['discount_materials_margin_id'] = $this->discount_materials_margin_id;
+        }
+        if (!empty($this->custom_fields)) {
+            $data['custom_fields'] = $this->custom_fields->toArray();
+        }
+
+        return $data;
+    }
 
     public static function fromArray(array $data): Client
     {

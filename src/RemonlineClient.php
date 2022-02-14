@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ushakovme\Remonline;
 
+use Exception;
 use Psr\Http\Message\RequestInterface as PSRRequestInterface;
 use RuntimeException;
 use Ushakovme\Remonline\Requests\ClientsRequest;
@@ -22,16 +23,34 @@ class RemonlineClient
 
     public function clients(ClientsRequest $clientsRequest): ClientsResponse
     {
-        $request = $this->makeGetRequest($clientsRequest, 'clients');
+        $request = $this->buildGetRequest('clients', $clientsRequest);
         $response = $this->sendRequest($request);
         return ClientsResponse::fromArray($response);
     }
 
     public function orders(OrdersRequest $ordersRequest): OrdersResponse
     {
-        $request = $this->makeGetRequest($ordersRequest, 'order');
+        $request = $this->buildGetRequest('order', $ordersRequest);
         $response = $this->sendRequest($request);
         return OrdersResponse::fromArray($response);
+    }
+
+    public function createClient(Client $client): Client
+    {
+        $request = $this->buildPostRequest('clients', $client->toArray());
+
+        $response = $this->sendRequest($request);
+        $data = $response['data'] ?? [];
+
+        if (empty($data['id'])) {
+            throw new Exception('id is not specified');
+        }
+
+        $id = $data['id'];
+
+        $client->setId($id);
+
+        return $client;
     }
 
     private function sendRequest(PSRRequestInterface $request): array
@@ -44,16 +63,30 @@ class RemonlineClient
         return $data;
     }
 
-    private function makeGetRequest(RequestInterface $request, string $path): PSRRequestInterface
+    private function buildGetRequest(string $path, RequestInterface $request): PSRRequestInterface
     {
         $data = $request->toArray();
-        $data['token'] = $this->token;
-
-        $url = $path . '/?' . urldecode(http_build_query($data));
-        $url = preg_replace('/\[\d]/', '[]', $url);
+        $url = $this->buildURL($path, $data);
 
         return new Request(
             'GET', $url
         );
+    }
+
+    private function buildPostRequest(string $path, array $data): PSRRequestInterface
+    {
+        $url = $this->buildURL($path, $data);
+
+        return new Request(
+            'POST', $url
+        );
+    }
+
+    private function buildURL(string $path, array $data): string|array|null
+    {
+        $data['token'] = $this->token;
+
+        $url = $path . '/?' . urldecode(http_build_query($data));
+        return preg_replace('/\[\d]/', '[]', $url);
     }
 }
