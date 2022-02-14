@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ushakovme\Remonline\Response;
+namespace Ushakovme\Remonline;
 
 final class AdCampaign
 {

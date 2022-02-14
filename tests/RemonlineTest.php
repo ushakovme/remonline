@@ -4,7 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Ushakovme\Remonline\Remonline;
+use Ushakovme\Remonline\RemonlineClient;
 use Ushakovme\Remonline\Requests\ClientsRequest;
 use Ushakovme\Remonline\Requests\OrdersRequest;
 use Ushakovme\Remonline\TokenClient;
@@ -56,7 +56,7 @@ class RemonlineTest extends TestCase
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
 
-        $remClient = new Remonline($client, 'token');
+        $remClient = new RemonlineClient($client, 'token');
         $clientsRequest = new ClientsRequest();
         $clientsResponse = $remClient->clients($clientsRequest);
 
@@ -75,8 +75,8 @@ class RemonlineTest extends TestCase
         $this->assertEquals(false, $client->isSupplier());
         $this->assertEquals(false, $client->isJuridical());
         $this->assertEquals(true, $client->isConflicted());
-        $this->assertEquals((new DateTime())->setTimestamp(1454278600000), $client->getModifiedAt());
-        $this->assertEquals((new DateTime())->setTimestamp(1454278610000), $client->getCreatedAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1454278600), $client->getModifiedAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1454278610), $client->getCreatedAt());
         $this->assertEquals('2900000000018', $client->getDiscountCode());
         $this->assertEquals(0, $client->getDiscountGoods());
         $this->assertEquals(5, $client->getDiscountServices());
@@ -189,7 +189,7 @@ class RemonlineTest extends TestCase
       "created_at": 1456131000000,
       "scheduled_for": null,
       "closed_at": 1456137100000,
-      "modified_at": 1456137000100,
+      "modified_at": 1456137000000,
       "packagelist": "my packagelist",
       "kindof_good": "Smartphone",
       "malfunction": "Broken display",
@@ -216,7 +216,7 @@ class RemonlineTest extends TestCase
         $handlerStack = HandlerStack::create($mock);
         $httpClient = new Client(['handler' => $handlerStack]);
 
-        $remClient = new Remonline($httpClient, 'token');
+        $remClient = new RemonlineClient($httpClient, 'token');
         $orderRequest = new OrdersRequest();
         $ordersResponse = $remClient->orders($orderRequest);
 
@@ -243,7 +243,7 @@ class RemonlineTest extends TestCase
         $this->assertEquals(1, $status->getGroup());
         $this->assertEquals('#999999', $status->getColor());
 
-        $this->assertEquals((new DateTime())->setTimestamp(1456137000000), $order->getDoneAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1456137000), $order->getDoneAt());
         $this->assertEquals(false, $order->isOverdue());
         $this->assertEquals(11, $order->getEngineerId());
         $this->assertEquals(12, $order->getManagerId());
@@ -296,21 +296,21 @@ class RemonlineTest extends TestCase
         $this->assertEquals('/documents/download/6729cff9b6c8401aae544c2c1006f296', $attachment->getUrl());
         $this->assertEquals('file.pdf', $attachment->getFilename());
 
-        $this->assertEquals((new DateTime())->setTimestamp(1456131000000), $order->getCreatedAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1456131000), $order->getCreatedAt());
         $this->assertEquals(null, $order->getScheduledFor());
-        $this->assertEquals((new DateTime())->setTimestamp(1456137100000), $order->getClosedAt());
-        $this->assertEquals((new DateTime())->setTimestamp(1456137000100), $order->getModifiedAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1456137100), $order->getClosedAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1456137000), $order->getModifiedAt());
         $this->assertEquals('my packagelist', $order->getPackagelist());
         $this->assertEquals('Smartphone', $order->getKindofGood());
         $this->assertEquals('Broken display', $order->getMalfunction());
         $this->assertEquals('W1', $order->getIdLabel());
         $this->assertEquals(1, $order->getClosedById());
-        $this->assertEquals((new DateTime())->setTimestamp(1459237000000), $order->getWarrantyDate());
+        $this->assertEquals((new DateTime())->setTimestamp(1459237000), $order->getWarrantyDate());
         $this->assertEquals('mng', $order->getManagerNotes());
         $this->assertEquals(1700, $order->getEstimatedCost());
         $this->assertEquals('engn', $order->getEngineerNotes());
         $this->assertEquals(true, $order->isWarrantyGranted());
-        $this->assertEquals((new DateTime())->setTimestamp(1456133000000), $order->getEstimatedDoneAt());
+        $this->assertEquals((new DateTime())->setTimestamp(1456133000), $order->getEstimatedDoneAt());
 
         $customFields = $order->getCustomFields();
         $this->assertEquals('Some custom value', $customFields->get("1"));

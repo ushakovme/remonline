@@ -12,7 +12,7 @@ $ composer require ushakovme/remonline
 <?php
 
 use GuzzleHttp\Client;
-use Ushakovme\Remonline\Remonline;
+use Ushakovme\Remonline\RemonlineClient;
 use Ushakovme\Remonline\Requests\ClientsRequest;
 use Ushakovme\Remonline\Requests\OrdersRequest;
 use Ushakovme\Remonline\TokenClient;
@@ -28,7 +28,7 @@ $tokenClient = new TokenClient($guzzleClient, '12093b30a1054cd4b229b8bdb25da3df'
 $token = $tokenClient->getToken();
 echo "token: " . $token . PHP_EOL;
 
-$remClient = new Remonline($guzzleClient, $token);
+$remClient = new RemonlineClient($guzzleClient, $token);
 $clientsRequest = new ClientsRequest();
 $clientsRequest->setNames(['Елена']);
 $clientsResponse = $remClient->clients($clientsRequest);

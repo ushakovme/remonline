@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ushakovme\Remonline\Response\Order;
+namespace Ushakovme\Remonline;
 
-class Operation
+class Part
 {
     private int $id;
     private int $engineer_id;
@@ -15,22 +15,6 @@ class Operation
     private float $amount;
     private float $warranty;
     private int $warranty_period;
-
-    public static function fromArray(array $data): self
-    {
-        $item = new self();
-        $item->id = $data['id'];
-        $item->engineer_id = $data['engineer_id'];
-        $item->title = $data['title'];
-        $item->cost = $data['cost'];
-        $item->price = $data['price'];
-        $item->discount_value = $data['discount_value'];
-        $item->amount = $data['amount'];
-        $item->warranty = $data['warranty'];
-        $item->warranty_period = $data['warranty_period'];
-
-        return $item;
-    }
 
     public function getId(): int
     {
@@ -77,5 +61,19 @@ class Operation
         return $this->warranty_period;
     }
 
+    public static function fromArray(array $data): self
+    {
+        $item = new self();
+        $item->id = $data['id'];
+        $item->engineer_id = $data['engineer_id'];
+        $item->title = $data['title'];
+        $item->cost = $data['cost'];
+        $item->price = $data['price'];
+        $item->discount_value = $data['discount_value'];
+        $item->amount = $data['amount'];
+        $item->warranty = $data['warranty'];
+        $item->warranty_period = $data['warranty_period'];
 
+        return $item;
+    }
 }

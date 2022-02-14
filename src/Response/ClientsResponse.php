@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Ushakovme\Remonline\Response;
 
 
+use Ushakovme\Remonline\Client;
+
 final class ClientsResponse
 {
     private int $page;
@@ -36,7 +38,7 @@ final class ClientsResponse
     {
         $response = new self();
         $response->count = $data['count'];
-        $response->page = (int)$data['page'];
+        $response->page = (int)($data['page'] ?? 1);
         $response->clients = array_map(static function (array $item): Client {
             return Client::fromArray($item);
         }, $data['data']);

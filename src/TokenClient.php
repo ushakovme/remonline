@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Ushakovme\Remonline;
 
 use DomainException;
-use Exception;
-use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Utils;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;

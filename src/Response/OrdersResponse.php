@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ushakovme\Remonline\Response\Order;
+namespace Ushakovme\Remonline\Response;
+
+use Ushakovme\Remonline\Order;
 
 final class OrdersResponse
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Ushakovme\Remonline\Response;
+namespace Ushakovme\Remonline;
 
-use Ushakovme\Remonline\Response\AdCampaign;
 use DateTime;
+use Exception;
 
 
 final class Client
@@ -14,6 +14,9 @@ final class Client
 
     private int $id;
     private string $name;
+    /**
+     * @var string[]
+     */
     private array $phone;
     private string $email;
     private string $notes;
@@ -44,8 +47,8 @@ final class Client
         $client->supplier = $data['supplier'] ?? false;
         $client->juridical = $data['juridical'] ?? false;
         $client->conflicted = $data['conflicted'] ?? false;
-        $client->modified_at = static::getDate($data, 'modified_at');
-        $client->created_at = static::getDate($data, 'created_at');
+        $client->modified_at = self::getDate($data, 'modified_at');
+        $client->created_at = self::getDate($data, 'created_at');
         $client->discount_code = $data['discount_code'] ?? '';
         $client->discount_goods = $data['discount_goods'] ?? 0;
         $client->discount_services = $data['discount_services'] ?? 0;
@@ -151,5 +154,108 @@ final class Client
     public function getAdCampaign(): ?AdCampaign
     {
         return $this->ad_campaign;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string[] $phones
+     */
+    public function setPhone(array $phones): void
+    {
+        foreach ($phones as $phone) {
+            if (!is_string($phone)) {
+                throw new Exception('phone must be string');
+            }
+        }
+        $this->phone = $phones;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setNotes(string $notes): void
+    {
+        $this->notes = $notes;
+    }
+
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    public function setSupplier(bool $supplier): void
+    {
+        $this->supplier = $supplier;
+    }
+
+    public function setJuridical(bool $juridical): void
+    {
+        $this->juridical = $juridical;
+    }
+
+    public function setConflicted(bool $conflicted): void
+    {
+        $this->conflicted = $conflicted;
+    }
+
+    public function setModifiedAt(?DateTime $modified_at): void
+    {
+        $this->modified_at = $modified_at;
+    }
+
+    public function setCreatedAt(?DateTime $created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+    public function setDiscountCode(string $discount_code): void
+    {
+        $this->discount_code = $discount_code;
+    }
+
+    public function setDiscountGoods(float $discount_goods): void
+    {
+        $this->discount_goods = $discount_goods;
+    }
+
+    public function setDiscountServices(float $discount_services): void
+    {
+        $this->discount_services = $discount_services;
+    }
+
+    public function setDiscountMaterials(float $discount_materials): void
+    {
+        $this->discount_materials = $discount_materials;
+    }
+
+    public function setDiscountGoodsMarginId(int $discount_goods_margin_id): void
+    {
+        $this->discount_goods_margin_id = $discount_goods_margin_id;
+    }
+
+    public function setDiscountMaterialsMarginId(int $discount_materials_margin_id): void
+    {
+        $this->discount_materials_margin_id = $discount_materials_margin_id;
+    }
+
+    public function setCustomFields(CustomFields $custom_fields): void
+    {
+        $this->custom_fields = $custom_fields;
+    }
+
+    public function setAdCampaign(?AdCampaign $ad_campaign): void
+    {
+        $this->ad_campaign = $ad_campaign;
     }
 }

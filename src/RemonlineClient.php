@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Ushakovme\Remonline;
 
-use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface as PSRRequestInterface;
 use RuntimeException;
 use Ushakovme\Remonline\Requests\ClientsRequest;
@@ -13,9 +12,9 @@ use Psr\Http\Client\ClientInterface;
 use Ushakovme\Remonline\Requests\OrdersRequest;
 use Ushakovme\Remonline\Requests\RequestInterface;
 use Ushakovme\Remonline\Response\ClientsResponse;
-use Ushakovme\Remonline\Response\Order\OrdersResponse;
+use Ushakovme\Remonline\Response\OrdersResponse;
 
-class Remonline
+class RemonlineClient
 {
     public function __construct(private ClientInterface $client, private string $token)
     {

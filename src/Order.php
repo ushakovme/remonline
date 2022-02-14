@@ -2,13 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Ushakovme\Remonline\Response\Order;
+namespace Ushakovme\Remonline;
 
 use DateTime;
-use Ushakovme\Remonline\Response\AdCampaign;
-use Ushakovme\Remonline\Response\Client;
-use Ushakovme\Remonline\Response\CustomFields;
-use Ushakovme\Remonline\Response\DateTrait;
 
 class Order
 {
@@ -72,7 +68,7 @@ class Order
         $order->client = Client::fromArray($data['client']);
         $order->ad_campaign = AdCampaign::fromArray($data['ad_campaign']);
         $order->status = Status::fromArray($data['status']);
-        $order->done_at = static::getDate($data, 'done_at');
+        $order->done_at = self::getDate($data, 'done_at');
         $order->overdue = $data['overdue'] ?? false;
         $order->engineer_id = $data['engineer_id'] ?? 0;
         $order->manager_id = $data['manager_id'] ?? 0;
@@ -92,22 +88,22 @@ class Order
         $order->attachments = array_map(static function (array $data): Attachment {
             return Attachment::fromArray($data);
         }, $data['attachments'] ?? []);
-        $order->created_at = static::getDate($data, 'created_at');
-        $order->scheduled_for = static::getDate($data, 'scheduled_for');
-        $order->closed_at = static::getDate($data, 'closed_at');
-        $order->modified_at = static::getDate($data, 'modified_at');
+        $order->created_at = self::getDate($data, 'created_at');
+        $order->scheduled_for = self::getDate($data, 'scheduled_for');
+        $order->closed_at = self::getDate($data, 'closed_at');
+        $order->modified_at = self::getDate($data, 'modified_at');
         $order->packagelist = $data['packagelist'];
         $order->kindof_good = $data['kindof_good'] ?? '';
         $order->malfunction = $data['malfunction'] ?? '';
         $order->id_label = $data['id_label'] ?? 0;
         $order->closed_by_id = $data['closed_by_id'] ?? 0;
         $order->custom_fields = CustomFields::fromArray($data['custom_fields'] ?? []);
-        $order->warranty_date = static::getDate($data, 'warranty_date');
+        $order->warranty_date = self::getDate($data, 'warranty_date');
         $order->manager_notes = $data['manager_notes'] ?? '';
         $order->estimated_cost = empty($data['estimated_cost']) ? 0 : (float) $data['estimated_cost'];
         $order->engineer_notes = $data['engineer_notes'] ?? '';
         $order->warranty_granted = $data['warranty_granted'] ?? false;
-        $order->estimated_done_at = static::getDate($data, 'estimated_done_at');
+        $order->estimated_done_at = self::getDate($data, 'estimated_done_at');
         $order->custom_fields = CustomFields::fromArray($data['custom_fields'] ?? []);
 
         return $order;
