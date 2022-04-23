@@ -14,11 +14,14 @@ use Ushakovme\Remonline\Requests\OrdersRequest;
 use Ushakovme\Remonline\Requests\RequestInterface;
 use Ushakovme\Remonline\Response\ClientsResponse;
 use Ushakovme\Remonline\Response\OrdersResponse;
+use Ushakovme\Remonline\TokenProvider\TokenProviderInterface;
 
 class RemonlineClient
 {
-    public function __construct(private ClientInterface $client, private string $token)
-    {
+    public function __construct(
+        private ClientInterface $client,
+        private TokenProviderInterface $tokenProvider,
+    ) {
     }
 
     public function clients(ClientsRequest $clientsRequest): ClientsResponse
@@ -84,7 +87,7 @@ class RemonlineClient
 
     private function buildURL(string $path, array $data): string|array|null
     {
-        $data['token'] = $this->token;
+        $data['token'] = $this->tokenProvider->getToken();
 
         $url = $path . '/?' . urldecode(http_build_query($data));
         return preg_replace('/\[\d]/', '[]', $url);
