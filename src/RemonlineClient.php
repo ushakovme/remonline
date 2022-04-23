@@ -58,7 +58,7 @@ class RemonlineClient
         $response = $this->client->sendRequest($request);
         $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         if ($response->getStatusCode() !== 200) {
-            throw new RuntimeException('Request error: ' . $data['message'] ?? '');
+            throw new RuntimeException('Request error: ' . json_encode($data['message'] ?? '{}'));
         }
         return $data;
     }
