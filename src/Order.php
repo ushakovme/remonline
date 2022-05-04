@@ -19,7 +19,7 @@ class Order
     private bool $urgent;
     private string $serial;
     private Client $client;
-    private AdCampaign $ad_campaign;
+    private ?AdCampaign $ad_campaign;
     private Status $status;
     private ?DateTime $done_at;
     private bool $overdue;
@@ -66,7 +66,7 @@ class Order
         $order->urgent = $data['urgent'] ?? '';
         $order->serial = $data['serial'] ?? '';
         $order->client = Client::fromArray($data['client']);
-        $order->ad_campaign = AdCampaign::fromArray($data['ad_campaign']);
+        $order->ad_campaign = !empty($data['ad_campaign']) ? AdCampaign::fromArray($data['ad_campaign']) : null;
         $order->status = Status::fromArray($data['status']);
         $order->done_at = self::getDate($data, 'done_at');
         $order->overdue = $data['overdue'] ?? false;
@@ -159,7 +159,7 @@ class Order
         return $this->client;
     }
 
-    public function getAdCampaign(): AdCampaign
+    public function getAdCampaign(): ?AdCampaign
     {
         return $this->ad_campaign;
     }
