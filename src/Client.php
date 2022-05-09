@@ -6,6 +6,7 @@ namespace Ushakovme\Remonline;
 
 use DateTime;
 use Exception;
+use InvalidArgumentException;
 
 
 final class Client
@@ -17,23 +18,23 @@ final class Client
     /**
      * @var string[]
      */
-    private array $phone;
-    private string $email;
-    private string $notes;
-    private string $address;
+    private array $phone = [];
+    private string $email = '';
+    private string $notes = '';
+    private string $address = '';
     private bool $supplier = false;
     private bool $juridical = false;
     private bool $conflicted = false;
     private ?DateTime $modified_at;
     private ?DateTime $created_at;
-    private string $discount_code;
-    private float $discount_goods;
-    private float $discount_services;
-    private float $discount_materials;
-    private int $discount_goods_margin_id;
-    private int $discount_materials_margin_id;
-    private CustomFields $custom_fields;
-    private ?AdCampaign $ad_campaign;
+    private string $discount_code = '';
+    private float $discount_goods = 0;
+    private float $discount_services = 0;
+    private float $discount_materials = 0;
+    private int $discount_goods_margin_id = 0;
+    private int $discount_materials_margin_id = 0;
+    private ?CustomFields $custom_fields = null;
+    private ?AdCampaign $ad_campaign = null;
 
     public function toArray(): array
     {
@@ -209,7 +210,7 @@ final class Client
 
     public function getCustomFields(): CustomFields
     {
-        return $this->custom_fields;
+        return $this->custom_fields ?? new CustomFields();
     }
 
     public function getAdCampaign(): ?AdCampaign
@@ -234,7 +235,7 @@ final class Client
     {
         foreach ($phones as $phone) {
             if (!is_string($phone)) {
-                throw new Exception('phone must be string');
+                throw new InvalidArgumentException('phone must be string');
             }
         }
         $this->phone = $phones;
