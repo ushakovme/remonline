@@ -38,7 +38,7 @@ class RemonlineClient
         return OrdersResponse::fromArray($response);
     }
 
-    public function createClient(Client $client): Client
+    public function createClient(Client $client): int
     {
         $request = $this->buildPostRequest('clients', $client->toArray());
 
@@ -49,17 +49,14 @@ class RemonlineClient
             throw new Exception('id is not specified');
         }
 
-        $id = $data['id'];
-
-        $client->setId($id);
-
-        return $client;
+        return (int) $data['id'];
     }
 
     private function sendRequest(PSRRequestInterface $request): array
     {
         $response = $this->client->sendRequest($request);
         $data = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+        print_r($data);
         if ($response->getStatusCode() !== 200) {
             throw new RuntimeException('Request error: ' . json_encode($data['message'] ?? '{}'));
         }
