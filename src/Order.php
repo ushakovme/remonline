@@ -92,7 +92,7 @@ class Order
         $order->scheduled_for = self::getDate($data, 'scheduled_for');
         $order->closed_at = self::getDate($data, 'closed_at');
         $order->modified_at = self::getDate($data, 'modified_at');
-        $order->packagelist = $data['packagelist'];
+        $order->packagelist = $data['packagelist'] ?? '';
         $order->kindof_good = $data['kindof_good'] ?? '';
         $order->malfunction = $data['malfunction'] ?? '';
         $order->id_label = $data['id_label'] ?? 0;
