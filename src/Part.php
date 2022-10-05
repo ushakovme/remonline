@@ -76,4 +76,19 @@ class Part
 
         return $item;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'engineer_id' => $this->getAmount(),
+            'title' => $this->getTitle(),
+            'cost' => $this->getCost(),
+            'price' => $this->getPrice(),
+            'discount_value' => $this->getDiscountValue(),
+            'amount' => $this->getAmount(),
+            'warranty' => $this->getWarranty(),
+            'warranty_period' => $this->getWarrantyPeriod(),
+        ];
+    }
 }

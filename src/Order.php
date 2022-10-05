@@ -31,7 +31,7 @@ class Order
     private OrderType $order_type;
     /* @var Part[] $parts */
     private array $parts;
-    /* @var Operation[] $parts */
+    /* @var Operation[] $operations */
     private array $operations;
     /* @var Tax[] $taxes */
     private array $taxes;
